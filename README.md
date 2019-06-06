@@ -44,6 +44,7 @@ Test Script creation:
 4. Define a TestNG.xml file with the appropriate parameters defined as Above for the test type you want to execute. Sample XML as Follows: 
 
 Running on a Local Browser - Chrome
+```
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Framework Test" verbose="1" parallel="false">
    	<parameter name="testType" value="BROWSER" />
@@ -60,9 +61,11 @@ Running on a Local Browser - Chrome
         </classes>
     </test>
 </suite>
+```
+
 
 Running a Browser test on a Local iOS Device
-
+```
 <suite name="Framework Test" verbose="1" parallel="false">
     <test name="Device Test - iOS - Google.com">
         <parameter name="testType" value="BROWSER" />
@@ -79,9 +82,10 @@ Running a Browser test on a Local iOS Device
         </classes>
     </test>
 </suite>
-
+```
 
 Running an App Test on a Local IOS Device
+```
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Framework Test" verbose="1" parallel="false">
     <test name="Device Test - iOS - Test App">
@@ -98,3 +102,4 @@ Running an App Test on a Local IOS Device
         </classes>
     </test>
 </suite>
+```
