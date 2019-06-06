@@ -5,7 +5,28 @@ Currently parameters are only supported when entered via TestNG.xml file.
 
 DISCLAIMER: This framework is for educational purposes only. Not intended for Enterprise or Production validation. Currently under active development to incorporate new features, and to complete the actions. 
 
+Requirements: 
+JDK 1.8+
+Appium Server
+Appium GUI
+Modern IDE with TestNG Integration
+Maven 
+
+For IOS Device Testing: 
+XCode
+Apple Developer Account
+
+For Android Device Testing: 
+ADB
+Android Studio 
+
+Included: 
+Current Versions (As of 6/6/2019) of popular browser drivers
+ChromeDriver, GeckoDriver, IEDriver, EdgeDriver
+SafarDriver not included as Safari Automation is handled via builtin support. 
+
 TestNG XML Parameters: 
+
 ***devicePlatform*** : VALUES: IOS, ANDROID, WEB
 This parameter controls the device to execute on. 
 IOS will try and launch an IOS device. Real or Simulated
