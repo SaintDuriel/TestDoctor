@@ -3,41 +3,43 @@ Web and Mobile Test Automation framework for Browser and App testing
 
 Currently parameters are only supported when entered via TestNG.xml file. 
 
-Parameters for Test Launch: 
-devicePlatform : Possible values IOS, ANDROID, WEB
+DISCLAIMER: This framework is for educational purposes only. Not intended for Enterprise or Production validation. Currently under active development to incorporate new features, and to complete the actions. 
+
+TestNG XML Parameters: 
+***devicePlatform*** : VALUES: IOS, ANDROID, WEB
 This parameter controls the device to execute on. 
 IOS will try and launch an IOS device. Real or Simulated
 Android will try and launch an Android device. Real or Simulated
 Web will try and launch a brwoser as defined in the 'webBrowser' parameter
 
-deviceVersion : Required when trying to run on an IOS or Android device. 
+***deviceVersion*** : Required when trying to run on an IOS or Android device. 
  
-deviceName : Required when trying to run on an IOS or Android device
+***deviceName*** : Required when trying to run on an IOS or Android device
  
-deviceIdentifier : UDID of the real device under test, used for both Android and IOS devices
+***deviceIdentifier*** : UDID of the real device under test, used for both Android and IOS devices
 
-appIdentifier : BundleID or AppPackage for app to test. NOTE: Application must already be installed. Used by IOS and Android
-appPath : Path to .zip, .apk or .ipa file to be sideloaded on the device under test. Only required if going to side load the application
-appActivity : The App Activity to launch on Android devices
+***appIdentifier*** : BundleID or AppPackage for app to test. NOTE: Application must already be installed. Used by IOS and Android.
 
-cloudEnvironment : The Cloud platform to execute tests on. Can be expanded to add whichever cloud services are required. Currently only Local is configured, but can be expanded to include any cloud service as long as the supporting code for interacting with those environments is done. 
+***appPath*** : Path to .zip, .apk or .ipa file to be sideloaded on the device under test. Only required if going to side load the application.
 
-Current configuration supports values of: Local, Browserstack, Saucelabs, Experitest, MobileLabs.
+***appActivity*** : The App Activity to launch on Android devices.
 
-websiteURL : For Browser based tests the URL of the Website to test. 
+***cloudEnvironment*** : VALUES: Local, Browserstack, Saucelabs, Experitest, MobileLabs.
+The Cloud platform to execute tests on. Can be expanded to add whichever cloud services are required. Currently only Local is configured, but can be expanded to include any cloud service as long as the supporting code for interacting with those environments is done. 
 
-webBrowser : Define the browser type for the test to execute upon. 
-Supports the following values: Mobile, Safari, IE10, IEEdge, Chrome, Firefox
+***websiteURL*** : For Browser based tests the URL of the Website to test. 
+
+***webBrowser*** : VALUES: Mobile, Safari, IE10, IEEdge, Chrome, Firefox
+Define the browser type for the test to execute upon. 
  
-testType :  Controls whether the test is an App test or a Browser test
-Supported values: App, Browser
+***testType*** :  VALUES: App, Browser
+Controls whether the test is an App test or a Browser test
 
-testEnvironment : Defines the test environment. This sets a value available to the test scripts in order to control which URL's may be accessed. Would need to implement a method handler to return the correct URL for which environment.  
-Supported Values: Dev, Int, QA, UAT, Stage Prod
+***testEnvironment*** : VALUES: Dev, Int, QA, UAT, Stage Prod
+Defines the test environment. This sets a value available to the test scripts in order to control which URL's may be accessed. Would need to implement a method handler to return the correct URL for which environment.  
 
-This framework is for educational purposes only. Not intended for Enterprise or Production validation. Currently under active development to incorporate new features, and to complete the actions. 
 
-Test Script creation: 
+***Test Script creation***: 
 1. Create a new class file within the TestCases folder. This class should extend from the Base class in the CORE folder. 
 2. Once extended from Base there will be an "actions" object that is your driver interface for finding and interacting with elements. Please refer to the ActionModule class in the 'Interactions" folder to understand the methods available. Each method has a platform specific implementation for IOS, Android and Web. 
 3. Annotate your test methods with the appropriate TestNG annotations for @Test, @BeforeClass, @AfterClass, @AfterMethod etc....
