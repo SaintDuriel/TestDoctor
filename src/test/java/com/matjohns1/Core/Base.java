@@ -9,7 +9,7 @@ import org.testng.annotations.AfterClass;
 public class Base extends D_Driver {
 
 
-    public ActionModule<?> returnDriver() {
+    public ActionModule<?,?> returnDriver() {
         return super.actions;
     }
 

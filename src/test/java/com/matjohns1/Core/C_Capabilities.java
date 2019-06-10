@@ -42,6 +42,9 @@ public class C_Capabilities extends B_Environment{
         super.setTestType(testType);
         super.setCloudPlatform(cloudEnvironment);
         super.setTestEnvironment(testEnvironment);
+        super.setDevicePlatform(devicePlatform);
+        this.initializeDeviceParams(deviceIdentifier, deviceVersion, deviceName, appIdentifier, appPath, appActivity);
+        super.setWebPlatform(webBrowser);
         this.setAppiumUrl();
         System.out.println("Test Type: " + super.testType.toString());
         System.out.println("Test Environment: " + super.env.toString());
@@ -50,31 +53,33 @@ public class C_Capabilities extends B_Environment{
         switch(super.testType) {
 
             case APP:
-                super.setDevicePlatform(devicePlatform);
-                System.out.println("Setting Mobile App Capabilities for device platform: " + super.devicePlatform.toString());
-                this.deviceIdentifier = deviceIdentifier;
-                this.deviceVersion = deviceVersion;
-                this.deviceName = deviceName;
-                this.appIdentifier = appIdentifier;
-                this.appPath = appPath;
-                this.appActivity = appActivity;
+                System.out.println("Setting Mobile App Capabilities for platform: " + super.devicePlatform.toString());
                 this.setAppTestCapabilities();
                 break;
             case BROWSER:
-                super.setWebPlatform(webBrowser);
-                super.setDevicePlatform(devicePlatform);
-                System.out.println("Setting Browser Capabilities for device browser: " + super.webPlatform.toString());
+                System.out.println("Setting Browser Capabilities for browser: " + super.webPlatform.toString());
                 this.websiteURL = websiteURL;
                 this.setWebTestCapabilities();
                 break;
         }
+        
+        System.out.println("Configured Capabilities: " + dc);
     }
 
+    private void initializeDeviceParams(String deviceIdentifier, String deviceVersion, String deviceName, String appIdentifier, String appPath, String appActivity)
+    {
+    	 this.deviceIdentifier = deviceIdentifier;
+         this.deviceVersion = deviceVersion;
+         this.deviceName = deviceName;
+         this.appIdentifier = appIdentifier;
+         this.appPath = appPath;
+         this.appActivity = appActivity;
+    }
     private void setAppiumUrl()
     {
         switch (super.cloudPlatform) {
             case LOCAL:
-                this.appiumUrl = "https://127.0.0.1:4723/wd/hub";
+                this.appiumUrl = "http://127.0.0.1:4723/wd/hub";
                 break;
             case BROWSERSTACK:
                 this.appiumUrl = "";
@@ -162,26 +167,6 @@ public class C_Capabilities extends B_Environment{
     }
 
 
-    /*
-        Generic Desired Capabilities
-        automationName
-        platformName
-        platformVersion
-        deviceName
-        app
-        browserName
-        newCommandTimeout
-        language
-        local
-        udid
-        orientation
-        autoWebview
-        noReset
-        fullReset
-        eventTimings
-        enablePerformanceLoggin
-        printPageSourceOnFindFailure
-         */
     private void setAppTestCapabilities(){
 
         dc.setCapability(MobileCapabilityType.NO_RESET, true);
@@ -207,7 +192,7 @@ public class C_Capabilities extends B_Environment{
         dc.setCapability(MobileCapabilityType.PLATFORM_VERSION, this.deviceVersion);
         dc.setCapability(MobileCapabilityType.DEVICE_NAME, this.deviceName);
         dc.setCapability(MobileCapabilityType.UDID, this.deviceIdentifier);
-        dc.setCapability(IOSMobileCapabilityType.BUNDLE_ID, "com.apple.mobilesafari");
+        //dc.setCapability(IOSMobileCapabilityType.BUNDLE_ID, "com.apple.mobilesafari");
         dc.setCapability(IOSMobileCapabilityType.BROWSER_NAME, "Safari");
     }
 
@@ -233,6 +218,7 @@ public class C_Capabilities extends B_Environment{
         dc.setCapability(MobileCapabilityType.PLATFORM_VERSION, this.deviceVersion);
         dc.setCapability(MobileCapabilityType.DEVICE_NAME, this.deviceName);
         dc.setCapability(MobileCapabilityType.UDID, this.deviceIdentifier);
+        
 
         if(this.appPath!= null)
         {
@@ -250,6 +236,8 @@ public class C_Capabilities extends B_Environment{
         dc.setCapability(MobileCapabilityType.DEVICE_NAME, this.deviceName);
         dc.setCapability(MobileCapabilityType.UDID, this.deviceIdentifier);
         dc.setCapability(MobileCapabilityType.BROWSER_NAME, "Chrome");
+        dc.setCapability("chromedriverExecutableDir", getSystemPathToDriver(""));
+        dc.setCapability("chromedriverChromeMappingFile", getSystemPathToResources()+"chromeDriverMappingFile.json");
     }
     
     private String getSystemPathToDriver(String driverName) 
@@ -259,6 +247,11 @@ public class C_Capabilities extends B_Environment{
     	} else {
     		return getLocalPath() +"/src/resources/Drivers/MacDrivers/" + driverName; 
     	}
+    }
+    
+    private String getSystemPathToResources() 
+    {
+    	return getLocalPath() +"/src/resources/";
     }
     
     private String getLocalPath() 

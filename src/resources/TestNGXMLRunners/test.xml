@@ -1,4 +1,4 @@
-<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<!--   <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Framework Test" verbose="1" parallel="false">
    		<parameter name="testType" value="BROWSER" />
         <parameter name="devicePlatform" value="Web" />
@@ -13,19 +13,42 @@
             <class name="com.matjohns1.TestCases.GoogleTest"/>
         </classes>
     </test>
-    <!--<test name="Device Test - iOS - Google.com">
-        <parameter name="testType" value="BROWSER" />
+</suite>-->
+  
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Framework Test" verbose="1" parallel="false">
+    <test name="Device Test - iOS - Test App">
+        <parameter name="testType" value="Browser" />
         <parameter name="testEnvironment" value="PROD" />
-        <parameter name="deviceName" value="Magic Screen" />
-        <parameter name="deviceVersion" value="12.3.1" />
-        <parameter name="deviceIdentifier" value="00008020-001E2D0C2E04002E" />
-        <parameter name="devicePlatform" value="IOS" />
+        <parameter name="deviceName" value="iPhone 7" />
+        <parameter name="deviceVersion" value="11.4" />
+        <parameter name="deviceIdentifier" value="7DAF8F19-B99E-4508-B919-53F54240A64C" />
+        <parameter name="webBrowser" value="mobile" />
+        <parameter name="devicePlatform" value="ios" />
         <parameter name="cloudEnvironment" value="Local"/>
-        <parameter name="webBrowser" value="MOBILE" />
         <parameter name="websiteURL" value="https://www.google.com" />
         <classes>
             <class name="com.matjohns1.TestCases.GoogleTest"/>
         </classes>
-    </test>-->
+    </test>
+</suite>
+ 
+ <!-- 
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Framework Test" verbose="1" parallel="false">
+    <test name="Device Test - iOS - Test App">
+        <parameter name="testType" value="Browser" />
+        <parameter name="testEnvironment" value="PROD" />
+        <parameter name="webBrowser" value="mobile" />
+        <parameter name="deviceName" value="Nexus_5X_API_27_x86 7" />
+        <parameter name="deviceVersion" value="8.1" />
+        <parameter name="devicePlatform" value="Android" />
+        <parameter name="cloudEnvironment" value="Local"/>
+        <parameter name="websiteURL" value="https://www.google.com" />
+        <classes>
+            <class name="com.matjohns1.TestCases.GoogleTest"/>
+        </classes>
+    </test>
 </suite>
 
+ -->
