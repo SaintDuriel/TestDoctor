@@ -4,13 +4,15 @@ import com.matjohns1.Interactions.ActionAndroid;
 import com.matjohns1.Interactions.ActionIOS;
 import com.matjohns1.Interactions.ActionWeb;
 import io.appium.java_client.MobileElement;
+
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.safari.SafariDriver;
 import org.testng.annotations.BeforeClass;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
-
+import org.openqa.selenium.remote.RemoteWebElement;
 
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
@@ -25,12 +27,13 @@ import java.net.URL;
  */
 public class D_Driver extends C_Capabilities{
 
-    public ActionModule<?> actions = null;
+    public ActionModule<?,?> actions = null;
 
     private URL serverUrl = null;
 
     @BeforeClass(alwaysRun = true)
     public void configureDriver() {
+    	this.setServerUrl();
     	switch(super.testType)
     	{
 		case APP:
@@ -41,8 +44,9 @@ public class D_Driver extends C_Capabilities{
 			break;
 		default:
 			break;
-    	
     	}
+    	
+    	System.out.println("Configured Driver pointing to address: " + serverUrl);
     }
     public void setServerUrl() {
         try {
@@ -59,10 +63,10 @@ public class D_Driver extends C_Capabilities{
         switch(super.devicePlatform){
 
             case IOS:
-                actions = new ActionIOS<IOSDriver<MobileElement>>(new IOSDriver<MobileElement>(serverUrl, super.dc));
+                actions = new ActionIOS<MobileElement,IOSDriver<MobileElement>>(new IOSDriver<MobileElement>(serverUrl, super.dc));
                 break;
             case ANDROID:
-                actions = new ActionAndroid<AndroidDriver<MobileElement>>(new AndroidDriver<MobileElement>(serverUrl, super.dc)) ;
+                actions = new ActionAndroid<MobileElement,AndroidDriver<MobileElement>>(new AndroidDriver<MobileElement>(serverUrl, super.dc)) ;
                 break;
             case WEB:
                 this.getWebPlatformDriver();
@@ -78,19 +82,19 @@ public class D_Driver extends C_Capabilities{
                 getMobilePlatformDriver();
                 break;
             case SAFARI:
-                actions = new ActionWeb<SafariDriver>(new SafariDriver());
+                actions = new ActionWeb<WebElement,SafariDriver>(new SafariDriver());
                 break;
             case IE10:
-                actions = new ActionWeb<InternetExplorerDriver>(new InternetExplorerDriver());
+                actions = new ActionWeb<WebElement,InternetExplorerDriver>(new InternetExplorerDriver());
                 break;
             case IEEDGE:
-                actions = new ActionWeb<EdgeDriver>(new EdgeDriver());
+                actions = new ActionWeb<WebElement, EdgeDriver>(new EdgeDriver());
                 break;
             case CHROME:
-                actions = new ActionWeb<ChromeDriver>(new ChromeDriver());
+                actions = new ActionWeb<WebElement,ChromeDriver>(new ChromeDriver());
                 break;
             case FIREFOX:
-                actions = new ActionWeb<FirefoxDriver>(new FirefoxDriver());
+                actions = new ActionWeb<WebElement,FirefoxDriver>(new FirefoxDriver());
                 break;
         }
         //actions.getURL(super.websiteURL);

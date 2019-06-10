@@ -1,94 +1,128 @@
 package com.matjohns1.Interactions;
 
+import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.MobileElement;
 import io.appium.java_client.ios.IOSDriver;
 
+import java.lang.reflect.Type;
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.remote.RemoteWebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
+
+import com.matjohns1.Interactions.ActionModule.Direction;
 
 /**
  * Created by matjohns1 on 6/5/19 2:24 PM
  */
-public class ActionIOS<X> implements ActionModule<X> {
+public class ActionIOS<E extends MobileElement, T extends AppiumDriver> implements ActionModule<MobileElement,IOSDriver> {
 
-    protected WebDriver driver;
-    protected IOSDriver iosdriver;
+	
+    protected RemoteWebDriver driver;
+    protected IOSDriver<MobileElement> iosdriver; 
+    
+    Duration implicitWait;
 
-    public ActionIOS(WebDriver driver) {
-        this.driver = driver;
-        this.iosdriver = (IOSDriver) driver;
+    public ActionIOS(IOSDriver<MobileElement> iosDriver2) {
+        this.driver = iosDriver2;
+        this.iosdriver = iosDriver2;
+    }
+    
+    private void logElementExceptions(By by)
+    {
+    	System.out.println("========================================");
+    	System.err.println("Unable to Locate Element by: " + by);
+    	System.out.println("========================================");
     }
 
-    public IOSDriver returnDriver() {
+    public IOSDriver<MobileElement> returnDriver() {
         return this.iosdriver;
     }
 
-    public WebElement returnElement(By locator) {
-        return null;
+    public MobileElement returnElement(By by) {
+        return iosdriver.findElement(by);
     }
 
-    public WebElement returnElement(By locator, int time, Boolean useMilliSeconds) {
-        return null;
+    public MobileElement returnElement(By by, Duration time) {
+		return null;
+        
     }
 
-    public WebElement findElement(By locator) {
-        return null;
+    public MobileElement findElement(By by) {
+       try {
+    	   return (MobileElement) iosdriver.findElement(by);
+       } catch (Exception e) {
+    	   this.logElementExceptions(by);
+    	   e.printStackTrace();
+    	   return null; 
+       }
+    	
     }
 
-    public WebElement findElement(By locator, int time, Boolean useMilliSeconds) {
-        return null;
+    public MobileElement findElement(By by, Duration time) {
+    	try {
+     	   return (MobileElement) this.setFluentWait(time).until(ExpectedConditions.visibilityOfElementLocated(by));
+        } catch (Exception e) {
+     	   this.logElementExceptions(by);
+     	   e.printStackTrace();
+     	   return null; 
+        }
     }
 
-    public WebElement findClickableElement(By locator) {
-        return null;
+    public MobileElement findClickableElement(By by) {
+        return waitElementClickable(by);
     }
 
-    public WebElement findClickableElement(By locator, int time, Boolean useMilliSeconds) {
-        return null;
+    public MobileElement findClickableElement(By by, Duration time) {
+        return waitElementClickable(by, time);
     }
 
-    public WebElement findVisibleElement(By locator) {
-        return null;
+    public MobileElement findVisibleElement(By by) {
+        return waitElementVisible(by);
     }
 
-    public WebElement findVisibleElement(By locator, int time, Boolean useMilliSeconds) {
-        return null;
+    public MobileElement findVisibleElement(By by, Duration time) {
+    	return waitElementVisible(by, time);
     }
 
-    public WebElement switchToAlert(By locator) {
+    public MobileElement switchToAlert(By by) {
         return null;
     }
 
     public Alert switchToAlert() {
+        return iosdriver.switchTo().alert();
+    }
+
+    public Boolean isClickable(By by) {
         return null;
     }
 
-    public Boolean isClickable(By locator) {
+    public Boolean isClickable(By by, Duration time) {
         return null;
     }
 
-    public Boolean isClickable(By locator, int time, Boolean useMilliSeconds) {
+    public Boolean isVisible(By by) {
         return null;
     }
 
-    public Boolean isVisible(By locator) {
+    public Boolean isVisible(By by, Duration time) {
         return null;
     }
 
-    public Boolean isVisible(By locator, int time, Boolean useMilliSeconds) {
+    public Boolean isPresent(By by) {
         return null;
     }
 
-    public Boolean isPresent(By locator) {
-        return null;
-    }
-
-    public Boolean isPresent(By locator, int time, Boolean useMilliSeconds) {
+    public Boolean isPresent(By by, Duration time) {
         return null;
     }
 
@@ -108,15 +142,15 @@ public class ActionIOS<X> implements ActionModule<X> {
 
     }
 
-    public void scrollUpAndDownTillVisible(By locator, int retryCount) {
+    public void scrollUpAndDownTillVisible(By by, int retryCount) {
 
     }
 
-    public void scrollUpTillVisible(By locator, int retryCount) {
+    public void scrollUpTillVisible(By by, int retryCount) {
 
     }
 
-    public void scrollDownTillVisible(By Locator, int retryCount) {
+    public void scrollDownTillVisible(By by, int retryCount) {
 
     }
 
@@ -136,7 +170,7 @@ public class ActionIOS<X> implements ActionModule<X> {
 
     }
 
-    public void swipeOnElementWithDirection(By locator, Direction direction) {
+    public void swipeOnElementWithDirection(By by, Direction direction) {
 
     }
 
@@ -149,80 +183,30 @@ public class ActionIOS<X> implements ActionModule<X> {
     }
 
     public void Teardown() {
-        iosdriver.quit();
+    	iosdriver.quit(); 
     }
 
     public void TeardownRefresh() {
-        iosdriver.quit();
-        iosdriver.launchApp();
+
     }
 
     public void getURL(String URL) {
         iosdriver.get(URL);
     }
 
-	public WebElement returnElement(By locator, Duration time) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public WebElement findElement(By locator, Duration time) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public ArrayList<WebElement> findElements(By locator) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public ArrayList<WebElement> findElements(By locator, Duration time) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public WebElement findClickableElement(By locator, Duration time) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public WebElement findVisibleElement(By locator, Duration time) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public Boolean isClickable(By locator, Duration time) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public Boolean isVisible(By locator, Duration time) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public Boolean isPresent(By locator, Duration time) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public Wait setFluentWait(Duration time) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public void sendKeys(By by, String text) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void sendKeys(By by, Duration time, String text) {
-		// TODO Auto-generated method stub
+	public Wait<IOSDriver<MobileElement>> setFluentWait(Duration time) {
+		return new FluentWait<IOSDriver<MobileElement>>(iosdriver).withTimeout(time); 
 		
 	}
 
 	public void click(By by) {
-		// TODO Auto-generated method stub
+		try {
+			this.waitElementClickable(by).click();
+		} catch (Exception e) {
+			logElementExceptions(by); 
+			e.printStackTrace();
+		}
+		
 		
 	}
 
@@ -237,42 +221,90 @@ public class ActionIOS<X> implements ActionModule<X> {
 	}
 
 	public void clickClickable(By by, Duration time) {
-		// TODO Auto-generated method stub
+		try {
+			((MobileElement) this.findClickableElement(by, time)).click(); 
+		} catch (Exception e) {
+			logElementExceptions(by); 
+			e.printStackTrace();
+		}
+		
 		
 	}
 
 	public void setImplicitWait(Duration time) {
-		// TODO Auto-generated method stub
+		implicitWait = time; 
 		
 	}
 
-	public WebElement waitElementPresent(By by) {
+	public MobileElement waitElementPresent(By by) {
+		return (MobileElement) this.setFluentWait(implicitWait).until(ExpectedConditions.presenceOfElementLocated(by));
+	}
+
+	public MobileElement waitElementVisible(By by) {
+		return (MobileElement)this.setFluentWait(implicitWait).until(ExpectedConditions.visibilityOfElementLocated(by));
+		
+	}
+
+	public MobileElement waitElementClickable(By by) {
+		return (MobileElement) this.setFluentWait(implicitWait).until(ExpectedConditions.elementToBeClickable(by));
+		
+	}
+
+	public MobileElement waitElementPresent(By by, Duration time) {
+		return (MobileElement)this.setFluentWait(time).until(ExpectedConditions.presenceOfElementLocated(by)); 
+		
+	}
+
+	public MobileElement waitElementVisible(By by, Duration time) {
+		return (MobileElement)this.setFluentWait(time).until(ExpectedConditions.visibilityOfElementLocated(by)); 
+		
+	}
+
+	public MobileElement waitElementClickable(By by, Duration time) {
+		return (MobileElement)this.setFluentWait(time).until(ExpectedConditions.elementToBeClickable(by)); 
+		
+	}
+	public void sendKeys(By by, String text) {
+		try {
+			((MobileElement) this.findElement(by)).sendKeys(text);
+		} catch(Exception e)
+		{
+			this.logElementExceptions(by);
+			e.printStackTrace();
+		}
+		
+	}
+	public void sendKeys(By by, Duration time, String text) {
+		// TODO Auto-generated method stub
+		
+	}
+	public List<MobileElement> findElements(By locator) {
+		// TODO Auto-generated method stub
+		return iosdriver.findElements(locator); 
+	}
+	public List<MobileElement> findElements(By locator, Duration time) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public WebElement waitElementVisible(By by) {
-		// TODO Auto-generated method stub
-		return null;
+	public void wait(int time) {
+		try { 
+			driver.wait((long) time); 
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		
 	}
 
-	public WebElement waitElementClickable(By by) {
+	public void wait(Duration time) {
 		// TODO Auto-generated method stub
-		return null;
+		
 	}
-
-	public WebElement waitElementPresent(By by, Duration time) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public WebElement waitElementVisible(By by, Duration time) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public WebElement waitElementClickable(By by, Duration time) {
-		// TODO Auto-generated method stub
-		return null;
+	
+public String getText(By by) {
+		
+		return findElement(by).getText(); 
+		
 	}
 }
