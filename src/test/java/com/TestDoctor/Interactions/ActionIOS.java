@@ -1,11 +1,13 @@
-package com.matjohns1.Interactions;
+package com.TestDoctor.Interactions;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
-import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.ios.IOSDriver;
 
+import java.lang.reflect.Type;
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -17,22 +19,24 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
 
-import com.matjohns1.Interactions.ActionModule.Direction;
+import com.TestDoctor.Interactions.ActionModule.Direction;
 
 /**
  * Created by matjohns1 on 6/5/19 2:24 PM
  */
-public class ActionAndroid<E extends MobileElement,T extends AppiumDriver> implements ActionModule<MobileElement,AndroidDriver<MobileElement>> {
+public class ActionIOS<E extends MobileElement, T extends AppiumDriver> implements ActionModule<MobileElement,IOSDriver> {
 
+	
     protected RemoteWebDriver driver;
-    protected AndroidDriver<MobileElement> androidDriver;
-    private Duration implicitWait;
+    protected IOSDriver<MobileElement> iosdriver; 
     
-    public ActionAndroid(AndroidDriver<MobileElement> driver) {
-        this.driver = (RemoteWebDriver)driver;
-        this.androidDriver =  (AndroidDriver<MobileElement>)driver;
-    }
+    Duration implicitWait;
 
+    public ActionIOS(IOSDriver<MobileElement> iosDriver2) {
+        this.driver = iosDriver2;
+        this.iosdriver = iosDriver2;
+    }
+    
     private void logElementExceptions(By by)
     {
     	System.out.println("========================================");
@@ -40,22 +44,22 @@ public class ActionAndroid<E extends MobileElement,T extends AppiumDriver> imple
     	System.out.println("========================================");
     }
 
-    public AndroidDriver<MobileElement> returnDriver() {
-        return androidDriver;
+    public IOSDriver<MobileElement> returnDriver() {
+        return this.iosdriver;
     }
 
     public MobileElement returnElement(By by) {
-        return androidDriver.findElement(by);
+        return iosdriver.findElement(by);
     }
 
     public MobileElement returnElement(By by, Duration time) {
-		return (MobileElement) this.waitElementPresent(by, time);
+		return null;
         
     }
 
     public MobileElement findElement(By by) {
        try {
-    	   return (MobileElement) androidDriver.findElement(by);
+    	   return (MobileElement) iosdriver.findElement(by);
        } catch (Exception e) {
     	   this.logElementExceptions(by);
     	   e.printStackTrace();
@@ -91,64 +95,51 @@ public class ActionAndroid<E extends MobileElement,T extends AppiumDriver> imple
     }
 
     public MobileElement switchToAlert(By by) {
-        return this.findElement(by);
+        return null;
     }
 
     public Alert switchToAlert() {
-        return androidDriver.switchTo().alert();
+        return iosdriver.switchTo().alert();
     }
 
     public Boolean isClickable(By by) {
-        if (this.waitElementClickable(by) != null) {
-        	return true; 
-        } else {
-        	return false; 
-        }
+        return null;
     }
 
     public Boolean isClickable(By by, Duration time) {
-        if(this.waitElementClickable(by, time) != null) {
-        	return true;
-        } else {
-        	return false; 
-        }
+        return null;
     }
 
     public Boolean isVisible(By by) {
-    	if(this.waitElementVisible(by) != null) {
-    		return true; 
-    	} else {
-    		return false; 
-    	}
+        return null;
     }
 
     public Boolean isVisible(By by, Duration time) {
-        if(this.waitElementVisible(by, time) != null) {
-        	return true; 
-        } else {
-        	return false; 
-        }
+        return null;
     }
 
     public Boolean isPresent(By by) {
-        if(this.waitElementPresent(by) != null) {
-        	return true; 
-        } else {
-        	return false; 
-        }
+        return null;
     }
 
     public Boolean isPresent(By by, Duration time) {
-        if(this.waitElementPresent(by, time) != null) {
-        	return true;
-        } else {
-        	return false; 
-        }
+        return null;
     }
 
+    public void waitElementPresent() {
+
+    }
+
+    public void waitElementVisible() {
+
+    }
+
+    public void waitElementClickable() {
+
+    }
 
     public void swipeByDirection(Direction direction) {
-    	
+
     }
 
     public void scrollUpAndDownTillVisible(By by, int retryCount) {
@@ -192,7 +183,7 @@ public class ActionAndroid<E extends MobileElement,T extends AppiumDriver> imple
     }
 
     public void Teardown() {
-    	androidDriver.quit(); 
+    	iosdriver.quit(); 
     }
 
     public void TeardownRefresh() {
@@ -200,17 +191,17 @@ public class ActionAndroid<E extends MobileElement,T extends AppiumDriver> imple
     }
 
     public void getURL(String URL) {
-        androidDriver.get(URL);
+        iosdriver.get(URL);
     }
 
-	public FluentWait<AndroidDriver<MobileElement>> setFluentWait(Duration time) {
-		return new FluentWait<AndroidDriver<MobileElement>>((AndroidDriver<MobileElement>) androidDriver).withTimeout(time); 
+	public Wait<IOSDriver<MobileElement>> setFluentWait(Duration time) {
+		return new FluentWait<IOSDriver<MobileElement>>(iosdriver).withTimeout(time); 
 		
 	}
 
 	public void click(By by) {
 		try {
-			((MobileElement) this.waitElementClickable(by)).click(); 
+			this.waitElementClickable(by).click();
 		} catch (Exception e) {
 			logElementExceptions(by); 
 			e.printStackTrace();
@@ -220,17 +211,23 @@ public class ActionAndroid<E extends MobileElement,T extends AppiumDriver> imple
 	}
 
 	public void click(By by, Duration time) {
-		((MobileElement) this.findElement(by, time)).click(); 
+		// TODO Auto-generated method stub
 		
 	}
 
 	public void clickClickable(By by) {
-		this.findClickableElement(by);
+		// TODO Auto-generated method stub
 		
 	}
 
 	public void clickClickable(By by, Duration time) {
-		((MobileElement) this.findClickableElement(by, time)).click();
+		try {
+			((MobileElement) this.findClickableElement(by, time)).click(); 
+		} catch (Exception e) {
+			logElementExceptions(by); 
+			e.printStackTrace();
+		}
+		
 		
 	}
 
@@ -240,14 +237,7 @@ public class ActionAndroid<E extends MobileElement,T extends AppiumDriver> imple
 	}
 
 	public MobileElement waitElementPresent(By by) {
-		try {
-			return (MobileElement) this.setFluentWait(implicitWait).until(ExpectedConditions.presenceOfElementLocated(by));
-		} catch (Exception e) {
-			this.logElementExceptions(by);
-			e.printStackTrace();
-			return null; 
-		}
-		
+		return (MobileElement) this.setFluentWait(implicitWait).until(ExpectedConditions.presenceOfElementLocated(by));
 	}
 
 	public MobileElement waitElementVisible(By by) {
@@ -256,47 +246,22 @@ public class ActionAndroid<E extends MobileElement,T extends AppiumDriver> imple
 	}
 
 	public MobileElement waitElementClickable(By by) {
-		try {
-			return (MobileElement)this.setFluentWait(implicitWait).until(ExpectedConditions.elementToBeClickable(by));
-		} catch (Exception e) {
-			this.logElementExceptions(by);
-			e.printStackTrace();
-			return null; 
-		}
+		return (MobileElement) this.setFluentWait(implicitWait).until(ExpectedConditions.elementToBeClickable(by));
 		
 	}
 
 	public MobileElement waitElementPresent(By by, Duration time) {
-		try {
-			return (MobileElement)this.setFluentWait(time).until(ExpectedConditions.presenceOfElementLocated(by)); 
-		} catch (Exception e) {
-			this.logElementExceptions(by);
-			e.printStackTrace();
-			return null; 
-		}
+		return (MobileElement)this.setFluentWait(time).until(ExpectedConditions.presenceOfElementLocated(by)); 
 		
 	}
 
 	public MobileElement waitElementVisible(By by, Duration time) {
-		try {
-			return (MobileElement)this.setFluentWait(time).until(ExpectedConditions.visibilityOfElementLocated(by)); 
-		} catch (Exception e) {
-			this.logElementExceptions(by);
-			e.printStackTrace();
-			return null; 
-		}
+		return (MobileElement)this.setFluentWait(time).until(ExpectedConditions.visibilityOfElementLocated(by)); 
 		
 	}
 
 	public MobileElement waitElementClickable(By by, Duration time) {
-		try { 
-			return (MobileElement)this.setFluentWait(time).until(ExpectedConditions.elementToBeClickable(by));
-		} catch (Exception e) {
-			this.logElementExceptions(by);
-			e.printStackTrace();
-			return null; 
-		}
-		 
+		return (MobileElement)this.setFluentWait(time).until(ExpectedConditions.elementToBeClickable(by)); 
 		
 	}
 	public void sendKeys(By by, String text) {
@@ -313,17 +278,22 @@ public class ActionAndroid<E extends MobileElement,T extends AppiumDriver> imple
 		// TODO Auto-generated method stub
 		
 	}
-	public ArrayList<MobileElement> findElements(By locator) {
+	public List<MobileElement> findElements(By locator) {
 		// TODO Auto-generated method stub
-		return null;
+		return iosdriver.findElements(locator); 
 	}
-	public ArrayList<MobileElement> findElements(By locator, Duration time) {
+	public List<MobileElement> findElements(By locator, Duration time) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	public void wait(int time) {
-		// TODO Auto-generated method stub
+		try { 
+			driver.wait((long) time); 
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+		}
 		
 	}
 
@@ -332,7 +302,9 @@ public class ActionAndroid<E extends MobileElement,T extends AppiumDriver> imple
 		
 	}
 	
-	public String getText(By by) {
+public String getText(By by) {
+		
 		return findElement(by).getText(); 
+		
 	}
 }

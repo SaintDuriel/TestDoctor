@@ -1,11 +1,12 @@
-package com.matjohns1.PageObjects.Google;
+package com.TestDoctor.PageObjects.Google;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.FindBy;
 
-import com.matjohns1.PageObjects.Annotation.Annotations.AndroidBy;
-import com.matjohns1.PageObjects.Annotation.Annotations.IOSBy;
-import com.matjohns1.PageObjects.Annotation.Annotations.WebBy;
+import com.TestDoctor.PageObjects.Annotation.Annotations.AndroidBy;
+import com.TestDoctor.PageObjects.Annotation.Annotations.IOSBy;
+import com.TestDoctor.PageObjects.Annotation.Annotations.WebBy;
+
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSBy;
 

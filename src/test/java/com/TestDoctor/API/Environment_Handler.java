@@ -1,10 +1,10 @@
-package com.matjohns1.API;
-
-import com.matjohns1.Core.B_Environment.Environment;
-import com.matjohns1.Core.A_Platform.CloudPlatform;
+package com.TestDoctor.API;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+
+import com.TestDoctor.Core.A_Platform.CloudPlatform;
+import com.TestDoctor.Core.B_Environment.Environment;
 
 /**
  * Created by matjohns1 on 6/5/19 9:34 AM

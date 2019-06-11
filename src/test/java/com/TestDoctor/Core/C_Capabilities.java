@@ -1,4 +1,4 @@
-package com.matjohns1.Core;
+package com.TestDoctor.Core;
 
 import io.appium.java_client.remote.AndroidMobileCapabilityType;
 import io.appium.java_client.remote.IOSMobileCapabilityType;

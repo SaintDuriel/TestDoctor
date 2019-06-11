@@ -1,14 +1,17 @@
-package com.matjohns1.Core;
+package com.TestDoctor.Core;
 
-import com.matjohns1.Interactions.ActionAndroid;
-import com.matjohns1.Interactions.ActionIOS;
-import com.matjohns1.Interactions.ActionWeb;
 import io.appium.java_client.MobileElement;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.safari.SafariDriver;
 import org.testng.annotations.BeforeClass;
+
+import com.TestDoctor.Interactions.ActionAndroid;
+import com.TestDoctor.Interactions.ActionIOS;
+import com.TestDoctor.Interactions.ActionModule;
+import com.TestDoctor.Interactions.ActionWeb;
+
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
@@ -16,8 +19,6 @@ import org.openqa.selenium.remote.RemoteWebElement;
 
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
-
-import com.matjohns1.Interactions.ActionModule;
 
 import java.net.MalformedURLException;
 import java.net.URL;

@@ -1,4 +1,4 @@
-package com.matjohns1.PageObjects.Annotation;
+package com.TestDoctor.PageObjects.Annotation;
 
 import java.lang.annotation.Annotation;
 import java.lang.annotation.ElementType;
@@ -16,11 +16,10 @@ import org.openqa.selenium.support.PageFactoryFinder;
 import org.openqa.selenium.support.pagefactory.Annotations;
 import org.openqa.selenium.support.pagefactory.FieldDecorator;
 
-import com.matjohns1.Core.A_Platform.DevicePlatform;
-
-import com.matjohns1.PageObjects.Annotation.Annotations.AndroidBy;
-import com.matjohns1.PageObjects.Annotation.Annotations.IOSBy;
-import com.matjohns1.PageObjects.Annotation.Annotations.WebBy;
+import com.TestDoctor.Core.A_Platform.DevicePlatform;
+import com.TestDoctor.PageObjects.Annotation.Annotations.AndroidBy;
+import com.TestDoctor.PageObjects.Annotation.Annotations.IOSBy;
+import com.TestDoctor.PageObjects.Annotation.Annotations.WebBy;
 
 
 
