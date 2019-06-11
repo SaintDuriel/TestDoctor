@@ -1,9 +1,9 @@
-package com.matjohns1.TestCases;
+package com.TestDoctor.TestCases;
 
-import com.matjohns1.Core.Base;
-import com.matjohns1.PageObjects.Annotation.PagiumFactorum;
-import com.matjohns1.PageObjects.Google.Homepage;
-import com.matjohns1.PageObjects.Google.SearchResults;
+import com.TestDoctor.Core.Base;
+import com.TestDoctor.PageObjects.Annotation.PagiumFactorum;
+import com.TestDoctor.PageObjects.Google.Homepage;
+import com.TestDoctor.PageObjects.Google.SearchResults;
 
 import java.time.Duration;
 import java.util.List;

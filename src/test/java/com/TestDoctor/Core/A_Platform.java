@@ -1,4 +1,4 @@
-package com.matjohns1.Core;
+package com.TestDoctor.Core;
 
 /**
  * Created by matjohns1 on 6/5/19 8:40 AM

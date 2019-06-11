@@ -1,6 +1,4 @@
-package com.matjohns1.Interactions;
-
-import com.matjohns1.Core.Base;
+package com.TestDoctor.Interactions;
 
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
@@ -16,6 +14,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import com.TestDoctor.Core.Base;
+
 import org.openqa.selenium.remote.RemoteWebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
 

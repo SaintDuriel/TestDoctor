@@ -1,10 +1,10 @@
-package com.matjohns1.PageObjects.Google;
+package com.TestDoctor.PageObjects.Google;
 
 import org.openqa.selenium.By;
 
-import com.matjohns1.PageObjects.Annotation.Annotations.AndroidBy;
-import com.matjohns1.PageObjects.Annotation.Annotations.IOSBy;
-import com.matjohns1.PageObjects.Annotation.Annotations.WebBy;
+import com.TestDoctor.PageObjects.Annotation.Annotations.AndroidBy;
+import com.TestDoctor.PageObjects.Annotation.Annotations.IOSBy;
+import com.TestDoctor.PageObjects.Annotation.Annotations.WebBy;
 
 public class SearchResults  {
 

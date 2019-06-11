@@ -1,7 +1,8 @@
-package com.matjohns1.Core;
+package com.TestDoctor.Core;
 
-import com.matjohns1.Interactions.ActionModule;
 import org.testng.annotations.AfterClass;
+
+import com.TestDoctor.Interactions.ActionModule;
 
 /**
  * Created by matjohns1 on 6/5/19 8:40 AM
