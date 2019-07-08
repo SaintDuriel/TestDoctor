@@ -39,6 +39,8 @@ public class C_Capabilities extends B_Environment{
             , @Optional String cloudEnvironment, @Optional String websiteURL,  @Optional String webBrowser, 
             @Optional String testType, @Optional String testEnvironment)
     {
+    	
+    	//TODO: Get Properties from config file, and resolve deltas from XML and Config
         super.setTestType(testType);
         super.setCloudPlatform(cloudEnvironment);
         super.setTestEnvironment(testEnvironment);
