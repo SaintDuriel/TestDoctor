@@ -1,25 +1,12 @@
 package com.TestDoctor.PageObjects.Annotation;
 
-import java.lang.annotation.Annotation;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
 import java.lang.reflect.Field;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.support.AbstractFindByBuilder;
-import org.openqa.selenium.support.ByIdOrName;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.How;
-import org.openqa.selenium.support.PageFactoryFinder;
-import org.openqa.selenium.support.pagefactory.Annotations;
-import org.openqa.selenium.support.pagefactory.FieldDecorator;
 
 import com.TestDoctor.Core.A_Platform.DevicePlatform;
-import com.TestDoctor.PageObjects.Annotation.Annotations.AndroidBy;
-import com.TestDoctor.PageObjects.Annotation.Annotations.IOSBy;
-import com.TestDoctor.PageObjects.Annotation.Annotations.WebBy;
+import com.TestDoctor.PageObjects.Annotation.Annotations.*;
+
 
 
 
@@ -42,15 +29,15 @@ public class PagiumFactorum {
 			break;
 		default:
 			break;
-		
+
 		}
 		return page; 
 	}
 
 	protected void findiOSAnnotatedFields(Object page, Class<IOSBy> findBy) 
 	{
-System.out.println("For Page Object : " + page.getClass().getName());
-		
+		System.out.println("For Page Object : " + page.getClass().getName());
+
 		Field[] delcaredFields = page.getClass().getDeclaredFields();
 		System.out.println("Captured the following Field Count: " + delcaredFields.length); 
 		for(Field field : delcaredFields) {
@@ -78,14 +65,14 @@ System.out.println("For Page Object : " + page.getClass().getName());
 
 				}
 			}
-			
+
 		}
 	}
-	
+
 	protected void findAndroidAnnotatedFields(Object page, Class<AndroidBy> findBy) 
 	{
 		System.out.println("For Page Object : " + page.getClass().getName());
-		
+
 		Field[] delcaredFields = page.getClass().getDeclaredFields();
 		System.out.println("Captured the following Field Count: " + delcaredFields.length); 
 		for(Field field : delcaredFields) {
@@ -113,14 +100,14 @@ System.out.println("For Page Object : " + page.getClass().getName());
 
 				}
 			}
-			
+
 		}
 	}
-	
+
 	protected void findWebAnnotatedFields(Object page, Class<WebBy> findBy) 
 	{
 		System.out.println("For Page Object : " + page.getClass().getName());
-		
+
 		Field[] delcaredFields = page.getClass().getDeclaredFields();
 		System.out.println("Captured the following Field Count: " + delcaredFields.length); 
 		for(Field field : delcaredFields) {
@@ -148,7 +135,7 @@ System.out.println("For Page Object : " + page.getClass().getName());
 
 				}
 			}
-			
+
 		}
 	}
 
@@ -174,9 +161,9 @@ System.out.println("For Page Object : " + page.getClass().getName());
 			return By.xpath(findBy.xpath());
 		}
 		return null;
-		
+
 	}
-	
+
 	protected By buildByFromShortFindBy(AndroidBy findBy)
 	{
 		if (!"".equals(findBy.className())) {
@@ -200,9 +187,9 @@ System.out.println("For Page Object : " + page.getClass().getName());
 			return By.xpath(findBy.xpath());
 		}
 		return null;
-		
+
 	}
-	
+
 	protected By buildByFromShortFindBy(WebBy findBy) {
 		if (!"".equals(findBy.className())) {
 			return By.className(findBy.className());

@@ -13,14 +13,15 @@ import org.testng.annotations.Parameters;
  * Created by matjohns1 on 6/5/19 8:45 AM
  */
 public class C_Capabilities extends B_Environment{
-    private String deviceIdentifier;
+    private PropertyConfigs pConfig; 
+	private String deviceIdentifier;
     private String deviceName;
     private String deviceVersion;
     private String appIdentifier;
     private String appActivity;
     private String appPath;
     public String websiteURL;
-    public String appiumUrl;
+    public String serverURL;
     
 
 
@@ -32,19 +33,22 @@ public class C_Capabilities extends B_Environment{
     @Parameters({
              "devicePlatform", "deviceVersion", "deviceName", "deviceIdentifier", "appIdentifier", "appPath", "appActivity" 
             , "cloudEnvironment", "websiteURL",  "webBrowser", 
-            "testType", "testEnvironment"
+            "testType", "testEnvironment", "realDevice"
     })
     public void setCapabilities(@Optional String devicePlatform, @Optional String deviceVersion, @Optional String deviceName
     		, @Optional String deviceIdentifier, @Optional String appIdentifier, @Optional String appPath, @Optional String appActivity 
             , @Optional String cloudEnvironment, @Optional String websiteURL,  @Optional String webBrowser, 
-            @Optional String testType, @Optional String testEnvironment)
+            @Optional String testType, @Optional String testEnvironment, @Optional String realDevice)
     {
-        super.setTestType(testType);
-        super.setCloudPlatform(cloudEnvironment);
-        super.setTestEnvironment(testEnvironment);
-        super.setDevicePlatform(devicePlatform);
-        this.initializeDeviceParams(deviceIdentifier, deviceVersion, deviceName, appIdentifier, appPath, appActivity);
-        super.setWebPlatform(webBrowser);
+    	pConfig = new PropertyConfigs( devicePlatform,   webBrowser,    deviceName,   deviceVersion ,   deviceIdentifier
+    			,   devicePlatform,   appIdentifier,   appPath,   appActivity ,   realDevice ,   cloudEnvironment ,   testEnvironment 	
+    			,  websiteURL,  testType);
+        super.setTestType(pConfig.testType);
+        super.setCloudPlatform(pConfig.cloudEnvironment);
+        super.setTestEnvironment(pConfig.testEnvironment);
+        super.setDevicePlatform(pConfig.devicePlatform);
+        this.initializeDeviceParams(pConfig.deviceIdentifier, pConfig.deviceVersion, pConfig.deviceName, pConfig.appIdentifier, pConfig.appPath, pConfig.appActivity);
+        super.setWebPlatform(pConfig.webBrowser);
         this.setAppiumUrl();
         System.out.println("Test Type: " + super.testType.toString());
         System.out.println("Test Environment: " + super.env.toString());
@@ -58,7 +62,7 @@ public class C_Capabilities extends B_Environment{
                 break;
             case BROWSER:
                 System.out.println("Setting Browser Capabilities for browser: " + super.webPlatform.toString());
-                this.websiteURL = websiteURL;
+                this.websiteURL = pConfig.websiteURL;
                 this.setWebTestCapabilities();
                 break;
         }
@@ -75,23 +79,15 @@ public class C_Capabilities extends B_Environment{
          this.appPath = appPath;
          this.appActivity = appActivity;
     }
+    
     private void setAppiumUrl()
     {
         switch (super.cloudPlatform) {
             case LOCAL:
-                this.appiumUrl = "http://127.0.0.1:4723/wd/hub";
+                this.serverURL = "http://127.0.0.1:4723/wd/hub";
                 break;
             case BROWSERSTACK:
-                this.appiumUrl = "";
-                break;
-            case SAUCELABS:
-                this.appiumUrl = "";
-                break;
-            case EXPERITEST:
-                this.appiumUrl = "";
-                break;
-            case MOBILELABS:
-                this.appiumUrl = "";
+                this.serverURL = CloudPlatform.BROWSERSTACK.getBrowserStackURL();
                 break;
         }
     }
@@ -99,6 +95,16 @@ public class C_Capabilities extends B_Environment{
     private void setCloudProperties()
     {
         //TODO: Add code for each Cloud environment properties such as any required OAuth Tokens or Credentials for access
+    	
+    	switch(this.cloudPlatform ) {
+		case BROWSERSTACK:
+			break;
+		case LOCAL:
+			break;			
+		default:
+			break;
+    	
+    	}
     }
 
 
@@ -114,8 +120,6 @@ public class C_Capabilities extends B_Environment{
                     case ANDROID:
                         setAndroidBrowserCapabilities();
                         break;
-                    case WEB:
-                        break;
                 }
                 break;
             case SAFARI:
@@ -128,7 +132,6 @@ public class C_Capabilities extends B_Environment{
                 setEdgeCapabilities();
                 break;
             case CHROME:
-
                 setChromeCapabilities();
                 break;
             case FIREFOX:
@@ -139,31 +142,82 @@ public class C_Capabilities extends B_Environment{
 
     private void setChromeCapabilities()
     {
-    	String filePathToDriver = getSystemPathToDriver("chromedriver"); 
-        System.out.println("Setting ChromeDriver Path to: " +filePathToDriver);
-        System.setProperty("webdriver.chrome.driver", filePathToDriver);
+    	if(super.cloudPlatform == CloudPlatform.BROWSERSTACK) {
+    		dc.setCapability("browser", "Chrome");
+    	    dc.setCapability("browser_version", "62.0");
+    	    dc.setCapability("os", "Windows");
+    	    dc.setCapability("os_version", "10");
+    	    dc.setCapability("resolution", "1024x768");
+    	    dc.setCapability("acceptSslCerts", "true");
+    	} else {
+    		String filePathToDriver = getSystemPathToDriver("chromedriver"); 
+            System.out.println("Setting ChromeDriver Path to: " +filePathToDriver);
+            System.setProperty("webdriver.chrome.driver", filePathToDriver);
+    	}
+    	
     }
 
     private void setFirefoxCapabilities()
     {
-    	String filePathToDriver = getSystemPathToDriver("geckodriver"); 
-        System.out.println("Setting GeckoDriver Path to: " +filePathToDriver);
-        System.setProperty("webdriver.gecko.driver", filePathToDriver);
+    	if(super.cloudPlatform == CloudPlatform.BROWSERSTACK) {
+    		dc.setCapability("browser", "Chrome");
+    	    dc.setCapability("browser_version", "62.0");
+    	    dc.setCapability("os", "Windows");
+    	    dc.setCapability("os_version", "10");
+    	    dc.setCapability("resolution", "1024x768");
+    	    dc.setCapability("acceptSslCerts", "true");
+    	} else {
+    		String filePathToDriver = getSystemPathToDriver("geckodriver"); 
+            System.out.println("Setting GeckoDriver Path to: " +filePathToDriver);
+            System.setProperty("webdriver.gecko.driver", filePathToDriver);
+    	}
+    	
     }
 
     private void setEdgeCapabilities()
     {
-        System.setProperty("webdriver.chrome.driver", "SomePath/To/ChromeDriver");
+    	if(super.cloudPlatform == CloudPlatform.BROWSERSTACK) {
+    		dc.setCapability("browser", "Chrome");
+    	    dc.setCapability("browser_version", "62.0");
+    	    dc.setCapability("os", "Windows");
+    	    dc.setCapability("os_version", "10");
+    	    dc.setCapability("resolution", "1024x768");
+    	    dc.setCapability("acceptSslCerts", "true");
+    	} else {
+    		System.setProperty("webdriver.chrome.driver", getSystemPathToDriver("edgedriver"));
+    	}
+        
     }
 
     private void setSafariCapabilities()
     {
-        System.setProperty("webdriver.chrome.driver", "SomePath/To/ChromeDriver");
+    	if(super.cloudPlatform == CloudPlatform.BROWSERSTACK) {
+    		dc.setCapability("browser", "Safari");
+    	    dc.setCapability("browser_version", "62.0");
+    	    dc.setCapability("os", "Windows");
+    	    dc.setCapability("os_version", "10");
+    	    dc.setCapability("resolution", "1024x768");
+    	    dc.setCapability("acceptSslCerts", "true");
+    		
+    	} else {
+    		System.setProperty("webdriver.chrome.driver", getSystemPathToDriver("safaridriver"));
+    	}
+        
     }
 
     private void setIECapabilities()
     {
-        System.setProperty("webdriver.chrome.driver", "SomePath/To/ChromeDriver");
+    	if(super.cloudPlatform == CloudPlatform.BROWSERSTACK) {
+    		dc.setCapability("browser", "Chrome");
+    	    dc.setCapability("browser_version", "62.0");
+    	    dc.setCapability("os", "Windows");
+    	    dc.setCapability("os_version", "10");
+    	    dc.setCapability("resolution", "1024x768");
+    	    dc.setCapability("acceptSslCerts", "true");
+    	} else {
+    		System.setProperty("webdriver.chrome.driver", getSystemPathToDriver("iedriver"));
+    	}
+        	
     }
 
 
@@ -179,7 +233,7 @@ public class C_Capabilities extends B_Environment{
             case ANDROID:
                 setAndroidCapabilities();
                 break;
-            case WEB:
+            default:
                 setWebTestCapabilities();
                 break;
         }
@@ -242,12 +296,32 @@ public class C_Capabilities extends B_Environment{
     
     private String getSystemPathToDriver(String driverName) 
     {
-    	if(getLocalPath().contains(":")) { //We are on Windows Machine, Use Window Driver Folder and include .exe extension
-    		return getLocalPath() +"/src/resources/Drivers/WinDrivers/"+driverName+".exe";
-    	} else {
-    		return getLocalPath() +"/src/resources/Drivers/MacDrivers/" + driverName; 
-    	}
-    }
+		String OS = System.getProperty("os.name");
+		System.out.println("Looks like your running on: " + System.getProperty("os.name"));
+		if(OS.toLowerCase().contains("win")) { //We are on Windows Machine, Use Window Driver Folder and include .exe extension
+			
+			System.out.println("Getting a Windows " + driverName);
+			
+			return getSystemPathToResources() + "Drivers/WinDrivers/"+ driverName+".exe";
+		} else if(OS.toLowerCase().contains("mac")){
+			
+			System.out.println("Getting a Mac " + driverName);
+			
+			return getSystemPathToResources() + "Drivers/MacDrivers/"+ driverName; 
+		} else if(OS.toLowerCase().contains("nix") 
+				|| OS.toLowerCase().contains("nux") 
+				|| OS.toLowerCase().contains("aix")) {
+			
+			System.out.println("Getting a *Nix " + driverName);
+			
+			return getSystemPathToResources() + "Drivers/Nix/" + driverName; 
+		} else {
+			
+			System.out.println(OS + " is not a valid Operating System for this Automation Framework. Serving up Windows Driver");
+			
+			return getSystemPathToResources() + "Drivers//WinDrivers/"+ driverName+".exe";
+		}
+	}
     
     private String getSystemPathToResources() 
     {

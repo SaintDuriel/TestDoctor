@@ -7,7 +7,7 @@ public class A_Platform {
 
 
     public DevicePlatform devicePlatform;
-    public WebPlatform webPlatform;
+    public BrowserPlatform webPlatform;
     public CloudPlatform cloudPlatform;
     public TestType testType;
     /**
@@ -16,6 +16,8 @@ public class A_Platform {
     public enum DevicePlatform {
         IOS,
         ANDROID,
+        WINDOWS,
+        MACOS,
         WEB;
     }
 
@@ -40,7 +42,7 @@ public class A_Platform {
     /**
      * Define which static WebPlatform to test on
      */
-    public enum WebPlatform {
+    public enum BrowserPlatform {
         MOBILE,
         SAFARI,
         IE10,
@@ -54,9 +56,9 @@ public class A_Platform {
         this.webPlatform = getWebPlatformEnum(webPlatformName);
     }
 
-    public WebPlatform getWebPlatformEnum(String webPlatformName)
+    public BrowserPlatform getWebPlatformEnum(String webPlatformName)
     {
-        for(WebPlatform platform: WebPlatform.values())
+        for(BrowserPlatform platform: BrowserPlatform.values())
         {
             if(webPlatformName.equalsIgnoreCase(platform.toString()))
             {
@@ -72,11 +74,33 @@ public class A_Platform {
      *
      */
     public enum CloudPlatform {
-        LOCAL,
-        BROWSERSTACK,
-        SAUCELABS,
-        EXPERITEST,
-        MOBILELABS;
+        LOCAL("http://127.0.0.1", "", ""),
+        BROWSERSTACK("", "", "");
+    	
+    	String url, uName, pWordOrAccess; 
+    	
+    	CloudPlatform(String url, String uName, String pWordorAccessKey) {
+    		this.url = url; 
+    		this.uName = uName; 
+    		this.pWordOrAccess = pWordorAccessKey;
+    	}
+    	
+    	public String getURL() {
+    		return this.url;
+    	}
+    	
+    	public String getUser() {
+    		return this.uName;
+    	}
+    	
+    	public String getAccesKey() {
+    		return this.pWordOrAccess;
+    	}
+    	
+    	public String getBrowserStackURL() {
+    		return "https://" + this.uName +":" + this.pWordOrAccess + this.url; 
+    	}
+    
     }
 
     public void setCloudPlatform(String cloudPlatformName)

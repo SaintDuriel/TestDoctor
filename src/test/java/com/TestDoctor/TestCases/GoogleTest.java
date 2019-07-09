@@ -8,6 +8,8 @@ import com.TestDoctor.PageObjects.Google.SearchResults;
 import java.time.Duration;
 import java.util.List;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -46,7 +48,7 @@ public class GoogleTest extends Base {
     @Test(priority = 3)
     public void verifiyOnSearchResultScreen()
     {
-    	String searchTerm = actions.findElement(results.searchField, Duration.ofSeconds(5)).getAttribute("value");
+    	String searchTerm = ((WebElement) actions.findElement(results.searchField, Duration.ofSeconds(5))).getAttribute("value");
     	SoftAssert sa = new SoftAssert();
     	sa.assertEquals(searchTerm, "Automation is awesome!");
     	sa.assertAll();
