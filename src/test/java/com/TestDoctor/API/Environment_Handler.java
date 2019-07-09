@@ -44,12 +44,6 @@ public class Environment_Handler {
                 break;
             case BROWSERSTACK:
                 break;
-            case SAUCELABS:
-                break;
-            case EXPERITEST:
-                break;
-            case MOBILELABS:
-                break;
         }
         return cloudURL;
     }

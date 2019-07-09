@@ -27,7 +27,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 
 
 
-public interface ActionModule<E extends WebElement,T extends RemoteWebDriver>
+public interface ActionModule<E,T >
 { 
 	enum Direction
 	{

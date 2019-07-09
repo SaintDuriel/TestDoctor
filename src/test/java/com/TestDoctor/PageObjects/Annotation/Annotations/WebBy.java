@@ -14,4 +14,5 @@ public @interface WebBy {
 	String name() default ""; 
 	String xpath() default "";
 	String accessibilityId() default "";
+	String tagName() default ""; 
 }

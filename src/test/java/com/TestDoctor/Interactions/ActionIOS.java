@@ -24,7 +24,7 @@ import com.TestDoctor.Interactions.ActionModule.Direction;
 /**
  * Created by matjohns1 on 6/5/19 2:24 PM
  */
-public class ActionIOS<E extends MobileElement, T extends AppiumDriver> implements ActionModule<MobileElement,IOSDriver> {
+public class ActionIOS<E extends MobileElement, T extends IOSDriver> implements ActionModule<MobileElement,IOSDriver> {
 
 	
     protected RemoteWebDriver driver;

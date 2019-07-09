@@ -15,6 +15,7 @@ import com.TestDoctor.Interactions.ActionWeb;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.remote.RemoteWebElement;
 
 import io.appium.java_client.android.AndroidDriver;
@@ -51,11 +52,11 @@ public class D_Driver extends C_Capabilities{
     }
     public void setServerUrl() {
         try {
-        	serverUrl = new URL(super.appiumUrl);
+        	serverUrl = new URL(super.serverURL);
         } catch (Exception e)
         {
             e.printStackTrace();
-            //Meh shouldn't happen.
+            //Meh shouldn't happen. BUT IT DID!
         }
     }
 
@@ -69,7 +70,7 @@ public class D_Driver extends C_Capabilities{
             case ANDROID:
                 actions = new ActionAndroid<MobileElement,AndroidDriver<MobileElement>>(new AndroidDriver<MobileElement>(serverUrl, super.dc)) ;
                 break;
-            case WEB:
+            default:
                 this.getWebPlatformDriver();
                 break;
         }
@@ -77,8 +78,11 @@ public class D_Driver extends C_Capabilities{
 
     public void getWebPlatformDriver()
     {
-        switch(super.webPlatform){
-
+    	switch(super.cloudPlatform) {
+		case BROWSERSTACK:
+			actions = new ActionWeb<WebElement, RemoteWebDriver>(new RemoteWebDriver(this.serverUrl, dc));
+		case LOCAL:
+			switch(super.webPlatform){
             case MOBILE:
                 getMobilePlatformDriver();
                 break;
@@ -98,6 +102,13 @@ public class D_Driver extends C_Capabilities{
                 actions = new ActionWeb<WebElement,FirefoxDriver>(new FirefoxDriver());
                 break;
         }
+			break; 
+
+		default:
+			break;
+    	
+    	}
+        
         //actions.getURL(super.websiteURL);
     }
 }
